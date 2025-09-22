@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 public class HelloController {
 
-    public  HelloController() {}
+    private final HelloService service;
+
+    public  HelloController(HelloService helloService) {
+        this.service = helloService;
+    }
 
 
     @PostMapping("/hello")
@@ -33,5 +37,11 @@ public class HelloController {
     @GetMapping("/hello")
     public String getHelloWithQueryParam(@RequestParam String requestParam) {
         return "Hello World " + requestParam;
+    }
+
+
+    @GetMapping("/hello/count")
+    public String getHelloCount(){
+        return service.helloCount();
     }
 }
