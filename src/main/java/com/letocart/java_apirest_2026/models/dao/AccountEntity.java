@@ -17,7 +17,7 @@ import lombok.Setter;
 public class AccountEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long accountId;
 
     private String username;
 

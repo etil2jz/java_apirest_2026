@@ -1,6 +1,8 @@
 package com.letocart.java_apirest_2026.controllers;
 
 import com.letocart.java_apirest_2026.models.dao.AccountEntity;
+import com.letocart.java_apirest_2026.models.dto.CreateAccount;
+import com.letocart.java_apirest_2026.models.mappers.AccountMapper;
 import com.letocart.java_apirest_2026.services.account.AccountService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AccountController {
 
+    private final AccountMapper mapper;
     private final AccountService service;
 
     @PostMapping("/account")
-    public AccountEntity save(@RequestBody AccountEntity account) {
+    public AccountEntity save(@RequestBody CreateAccount account) {
         // ATTENTION pour le save il faut que dans le body supprimer
         // le account_id en effet pour JPA il faut que account_id soit null
         // Vu qu'on utilise un Long
-        return service.save(account);
+
+
+        return service.save(mapper.buildDaoFromDto(account));
     }
 
     @GetMapping("/account/{accountId}")
