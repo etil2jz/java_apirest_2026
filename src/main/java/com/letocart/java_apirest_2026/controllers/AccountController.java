@@ -6,6 +6,7 @@ import com.letocart.java_apirest_2026.models.mappers.AccountMapper;
 import com.letocart.java_apirest_2026.services.account.AccountService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,7 @@ public class AccountController {
     }
 
     @GetMapping("/account/{accountId}")
-    public AccountEntity findById(@PathVariable Long accountId) {
+    public ResponseEntity<AccountEntity> findById(@PathVariable Long accountId) {
         return service.findById(accountId);
     }
 
