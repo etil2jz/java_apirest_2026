@@ -34,7 +34,7 @@ public class AccountController {
 
     @GetMapping("/account/{accountId}")
     public ResponseEntity<AccountEntity> findById(@PathVariable Long accountId) {
-        return service.findById(accountId);
+        return ResponseEntity.ok(service.findById(accountId));
     }
 
     @GetMapping("/account")

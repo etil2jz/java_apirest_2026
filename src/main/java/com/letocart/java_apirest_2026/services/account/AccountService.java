@@ -6,6 +6,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface AccountService {
     AccountEntity save(AccountEntity account);
-    ResponseEntity<AccountEntity> findById(Long id);
+    AccountEntity findById(Long id);
     List<AccountEntity> findAll();
 }

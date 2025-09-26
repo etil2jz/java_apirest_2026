@@ -1,5 +1,6 @@
 package com.letocart.java_apirest_2026.services.account;
 
+import com.letocart.java_apirest_2026.configuration.exeption.types.NotFoundException;
 import com.letocart.java_apirest_2026.models.dao.AccountEntity;
 import com.letocart.java_apirest_2026.repositories.AccountJPARepository;
 import java.util.List;
@@ -18,13 +19,12 @@ public class AccountServiceImp  implements AccountService {
         return repository.save(account);
     }
 
-    public ResponseEntity<AccountEntity> findById(Long id) {
+    public AccountEntity findById(Long id) {
         Optional<AccountEntity> account = repository.findById(id);
-        return isPresent(account);
-    }
-
-    private ResponseEntity<AccountEntity> isPresent(Optional<AccountEntity> account) {
-        return account.isPresent() ? ResponseEntity.ok(account.get()) : ResponseEntity.notFound().build();
+        if (account.isEmpty()){
+            throw new NotFoundException("Account not found");
+        }
+        return account.get();
     }
 
     public List<AccountEntity> findAll() {
