@@ -1,13 +1,12 @@
 package com.letocart.java_apirest_2026.models.dao;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity(name = "account")
 @NoArgsConstructor
@@ -22,5 +21,11 @@ public class AccountEntity {
     private String username;
 
     private String description;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id", referencedColumnName = "addressId")
+	private AddressEntity address;
+
+	@OneToMany(mappedBy = "account")
+	private List<OrdersEntity> orders;
 }
-// TODO create create DTO and classic DTO

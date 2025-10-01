@@ -16,6 +16,9 @@ public class AccountServiceImp  implements AccountService {
     private final AccountJPARepository repository;
 
     public AccountEntity save(AccountEntity account) {
+		if (account == null) {
+			throw new IllegalArgumentException("Account must not be null");
+		}
         return repository.save(account);
     }
 
@@ -28,6 +31,10 @@ public class AccountServiceImp  implements AccountService {
     }
 
     public List<AccountEntity> findAll() {
-        return repository.findAll();
+        List<AccountEntity> accounts = repository.findAll();
+		if (accounts.isEmpty()) {
+			throw new NotFoundException("No account found");
+		}
+		return accounts;
     }
 }

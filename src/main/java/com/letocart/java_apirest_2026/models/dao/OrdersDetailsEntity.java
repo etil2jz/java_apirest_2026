@@ -1,0 +1,27 @@
+package com.letocart.java_apirest_2026.models.dao;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity(name = "orders_details")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class OrdersDetailsEntity {
+	@EmbeddedId
+	private OrdersDetailsId ordersDetailsId;
+
+	@MapsId("ordersId")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "orders_id")
+	private OrdersEntity orders;
+
+	@MapsId("productId")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "product_id")
+	private ProductEntity product;
+}
