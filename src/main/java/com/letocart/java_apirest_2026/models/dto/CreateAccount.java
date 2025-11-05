@@ -12,7 +12,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateAccount {
-    @NotBlank
-    private String username;
-    private String description;
+
+	@NotBlank
+	private String username;
+
+	@NotBlank
+	private String description;
+
+	@NotBlank
+	private String address;
+
 }

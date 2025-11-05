@@ -1,6 +1,13 @@
 package com.letocart.java_apirest_2026.models.dao;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +19,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NoticeEntity {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long noticeId;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -29,4 +37,5 @@ public class NoticeEntity {
 	private ProductEntity product;
 
 	private String userReview;
+
 }

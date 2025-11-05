@@ -1,6 +1,11 @@
 package com.letocart.java_apirest_2026.models.dao;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OrdersDetailsEntity {
+
 	@EmbeddedId
 	private OrdersDetailsId ordersDetailsId;
 
@@ -24,4 +30,5 @@ public class OrdersDetailsEntity {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "product_id")
 	private ProductEntity product;
+
 }

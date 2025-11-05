@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 public class OrdersDetailsId implements Serializable {
+
 	private Long ordersId;
 	private Long productId;
+
 }
