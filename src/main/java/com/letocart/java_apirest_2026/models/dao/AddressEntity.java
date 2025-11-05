@@ -1,5 +1,6 @@
 package com.letocart.java_apirest_2026.models.dao;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +25,7 @@ public class AddressEntity {
 	private String address;
 
 	@OneToOne(mappedBy = "address")
+	@JsonBackReference
 	private AccountEntity account;
 
 }

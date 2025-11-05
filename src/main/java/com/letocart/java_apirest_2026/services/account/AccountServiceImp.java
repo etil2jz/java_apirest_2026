@@ -2,12 +2,15 @@ package com.letocart.java_apirest_2026.services.account;
 
 import com.letocart.java_apirest_2026.configuration.exception.types.NotFoundException;
 import com.letocart.java_apirest_2026.models.dao.AccountEntity;
+import com.letocart.java_apirest_2026.models.dto.Feature;
 import com.letocart.java_apirest_2026.models.dto.GeocodingResponse;
+import com.letocart.java_apirest_2026.models.dto.Properties;
 import com.letocart.java_apirest_2026.repositories.AccountJPARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,20 +23,24 @@ public class AccountServiceImp implements AccountService {
 	private final RestClient restClient;
 
 	public AccountEntity save(AccountEntity account) {
-		if (account == null || account.getAddress() == null || account.getAddress().getAddress() == null) {
-			throw new IllegalArgumentException("Account and address must not be null");
+		if (account == null || account.getDescription() == null || account.getAddress() == null || account.getAddress().getAddress() == null) {
+			throw new IllegalArgumentException("Account, description or address must not be null");
 		}
 
 		String addressToVerify = account.getAddress().getAddress();
 
-		GeocodingResponse response = restClient.get().uri("/geocodage/search?q={address}&limit=1", addressToVerify).retrieve().body(GeocodingResponse.class);
+		GeocodingResponse response = restClient.get().uri("/geocodage/search?q={address}", addressToVerify).retrieve().body(GeocodingResponse.class);
 
-		boolean isValid = false;
+		Optional<Properties> validAddressProperties = Optional.empty();
 		if (response != null) {
-			isValid = response.getFeatures().stream().findFirst().map(feature -> feature.getProperties().getScore()).filter(score -> score > 0.6).isPresent();
+			validAddressProperties = response.getFeatures().stream()
+					.map(Feature::getProperties)
+					.filter(properties -> properties.getScore() > 0.8)
+					.findFirst();
 		}
 
-		if (isValid) {
+		if (validAddressProperties.isPresent()) {
+			account.getAddress().setAddress(validAddressProperties.get().getLabel());
 			return repository.save(account);
 		} else {
 			throw new NotFoundException("Address '" + addressToVerify + "' not found or incorrect");

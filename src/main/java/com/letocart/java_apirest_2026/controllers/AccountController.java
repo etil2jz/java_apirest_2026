@@ -26,11 +26,6 @@ public class AccountController {
 
 	@PostMapping("/account")
 	public AccountEntity save(@RequestBody @Valid CreateAccount account) {
-		// ATTENTION pour le save il faut que dans le body supprimer
-		// le account_id en effet pour JPA il faut que account_id soit null
-		// Vu qu'on utilise un Long
-
-
 		return service.save(mapper.buildDaoFromDto(account));
 	}
 

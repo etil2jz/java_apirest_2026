@@ -1,5 +1,6 @@
 package com.letocart.java_apirest_2026.models.dao;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +32,8 @@ public class AccountEntity {
 	private String description;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "address_id"/*, referencedColumnName = "addressId"*/)
+	@JoinColumn(name = "address_id", referencedColumnName = "addressId")
+	@JsonManagedReference
 	private AddressEntity address;
 
 	@OneToMany(mappedBy = "account")
