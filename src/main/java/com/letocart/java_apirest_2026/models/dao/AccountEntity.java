@@ -29,6 +29,8 @@ public class AccountEntity {
 
 	private String username;
 
+	private String password;
+
 	private String description;
 
 	@OneToOne(cascade = CascadeType.ALL)

@@ -7,6 +7,7 @@ import com.letocart.java_apirest_2026.models.dto.GeocodingResponse;
 import com.letocart.java_apirest_2026.models.dto.Properties;
 import com.letocart.java_apirest_2026.repositories.AccountJPARepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -21,6 +22,8 @@ public class AccountServiceImp implements AccountService {
 	private final AccountJPARepository repository;
 
 	private final RestClient restClient;
+
+	private final PasswordEncoder passwordEncoder;
 
 	public AccountEntity save(AccountEntity account) {
 		if (account == null || account.getDescription() == null || account.getAddress() == null || account.getAddress().getAddress() == null) {
@@ -40,6 +43,7 @@ public class AccountServiceImp implements AccountService {
 		}
 
 		if (validAddressProperties.isPresent()) {
+			account.setPassword(passwordEncoder.encode(account.getPassword()));
 			account.getAddress().setAddress(validAddressProperties.get().getLabel());
 			return repository.save(account);
 		} else {

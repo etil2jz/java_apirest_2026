@@ -1,4 +1,4 @@
-package com.letocart.java_apirest_2026.configuration;
+package com.letocart.java_apirest_2026.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

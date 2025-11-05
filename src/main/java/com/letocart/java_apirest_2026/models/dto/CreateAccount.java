@@ -17,6 +17,9 @@ public class CreateAccount {
 	private String username;
 
 	@NotBlank
+	private String password;
+
+	@NotBlank
 	private String description;
 
 	@NotBlank

@@ -9,6 +9,7 @@ import org.mapstruct.Mapping;
 public interface AccountMapper {
 
 	@Mapping(source = "address", target = "address.address")
+	@Mapping(source = "password", target = "password")
 	AccountEntity buildDaoFromDto(CreateAccount dto);
 
 }
