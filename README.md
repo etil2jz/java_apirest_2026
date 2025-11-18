@@ -5,35 +5,59 @@ L'objectif est de découvrir plein de technologies et permettre aux utilisateurs
 ## Pré-requis
 Pour lancer ce projet, Docker Compose est requis.
 
-### Utilisateur Windows
-Ouvrez un terminal et exécutez la commande : `wsl --install`
+#### Utilisateur Windows
+Ouvrez un terminal et exécutez la commande : 
+```shell
+wsl --install
+```
 
-Pour le sous-système Ubuntu : `wsl --install -d Ubuntu`
+Pour le sous-système Ubuntu : 
+```shell
+wsl --install -d Ubuntu
+```
 
-Pour le sous-système Debian (vous avez du goût) : `wsl --install -d Debian`
+Pour le sous-système Debian (vous avez du goût) : 
+```shell
+wsl --install -d Debian
+```
 
 Vous pouvez ensuite entrer dans le sous-système choisi :
 
-Ubuntu : `wsl -d Ubuntu`
+Ubuntu : 
+```shell
+wsl -d Ubuntu
+```
 
-Debian : `wsl -d Debian`
+Debian : 
+```shell
+wsl -d Debian
+```
 
 Suivez maintenant la partie **Utilisateur Linux**.
 
-### Utilisateur macOS (bientôt moi)
+#### Utilisateur macOS (bientôt moi)
 Installez l'utilitaire Brew : https://brew.sh
 
 Puis installez l'outil Colima : https://formulae.brew.sh/formula/colima
 
-Enfin, démarrez Colima en exécutant la commande : `colima start`
+Enfin, démarrez Colima en exécutant la commande : 
+```shell
+colima start
+```
 
 Suivez maintenant la partie **Utilisateur Linux**.
 
-### Utilisateur Linux
+#### Utilisateur Linux
 Installez Docker : https://docs.docker.com/engine/install/
 
 Si vous souhaitez éviter d'utiliser `sudo` pour chaque commande Docker : https://docs.docker.com/engine/install/linux-postinstall/
 
+### Démarrer la base de données MySQL
+Déployez un conteneur MySQL en exécutant la commande suivante dans le répertoire `database` du projet : 
+```shell
+docker compose up -d
+```
+___
 ## Contrat d'interface
 Afin de visualiser les routes existantes, un Swagger est à votre disposition.
 
