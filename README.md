@@ -1,57 +1,47 @@
-## Introduction
-Ce projet a pour but de lancer un projet bootstrap en java spring boot  
-Celui-ci est de permettre de découvrir plein de technologies et laisser les utilisateurs faire leur opinion et potentiellement de l'améliorer.
+# Introduction
+Ce projet a pour but de lancer un projet bootstrap en Java Spring Boot.
+L'objectif est de découvrir plein de technologies et permettre aux utilisateurs de laisser un avis sur un produit.
 
-### Pré-requis
-Pour lancer ce projet, il faut docker compose. Nous allons les procedures pour la majorité des OS
+## Pré-requis
+Pour lancer ce projet, Docker Compose est requis.
 
-#### Windows
-Il faut WSL
+### Utilisateur Windows
+Ouvrez un terminal et exécutez la commande : `wsl --install`
 
-```wsl --install```
+Pour le sous-système Ubuntu : `wsl --install -d Ubuntu`
 
-##### Pour installer la bonne distribution :
-Si vous aimez Ubuntu :  
-```wsl --install -d Ubuntu```  
-Si vous aimez Debian  :  
-```wsl --install -d Debian```
+Pour le sous-système Debian (vous avez du goût) : `wsl --install -d Debian`
 
-Pour vérifier la version :  
-```wsl -l -v```
+Vous pouvez ensuite entrer dans le sous-système choisi :
 
-##### Pour entrer en mode linux
-Ubuntu :  
-```wsl -d Ubuntu```  
-Debian :  
-```wsl -d Debian```
+Ubuntu : `wsl -d Ubuntu`
 
-Ensuite suivre le tuto Linux
+Debian : `wsl -d Debian`
 
-#### MacOs
-Je conseille d'installer ```brew```  
-via : https://brew.sh
+Suivez maintenant la partie **Utilisateur Linux**.
 
-Ensuite selon votre Mac :  
-https://formulae.brew.sh/formula/colima
+### Utilisateur macOS (bientôt moi)
+Installez l'utilitaire Brew : https://brew.sh
 
-Avec colima démarrer :  
-```colima start```
+Puis installez l'outil Colima : https://formulae.brew.sh/formula/colima
 
-Suivre le tuto Linux
+Enfin, démarrez Colima en exécutant la commande : `colima start`
 
-#### Linux
-Il faut installer docker voici le lien officiel :  
-https://docs.docker.com/compose/install/linux/
+Suivez maintenant la partie **Utilisateur Linux**.
 
-Et voici le lien officiel pour mettre docker en sudo :  
-https://docs.docker.com/engine/install/linux-postinstall/
+### Utilisateur Linux
+Installez Docker : https://docs.docker.com/engine/install/
 
-### Contrat d'interface
-Voici le swagger associé au projet pour tester les routes actuelles.
+Si vous souhaitez éviter d'utiliser `sudo` pour chaque commande Docker : https://docs.docker.com/engine/install/linux-postinstall/
 
-http://localhost:8080/swagger-ui/index.html
+## Contrat d'interface
+Afin de visualiser les routes existantes, un Swagger est à votre disposition.
 
-### Explication actuelle de cette branche
+Swagger est un outil qui génère automatiquement une documentation interactive et visuelle pour une API.
+
+http://127.0.0.1:8080/swagger-ui/index.html
+
+### Explication de l'API
 Nous avons créé :
 
 - Un controller Account
