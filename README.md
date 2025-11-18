@@ -1,4 +1,4 @@
-# Introduction
+# Introduction à Java J2EE
 Ce projet a pour but de lancer un projet bootstrap en Java Spring Boot.
 L'objectif est de découvrir plein de technologies et permettre aux utilisateurs de laisser un avis sur un produit.
 
