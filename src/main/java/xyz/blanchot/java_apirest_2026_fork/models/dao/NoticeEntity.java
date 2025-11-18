@@ -24,15 +24,15 @@ public class NoticeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long noticeId;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "orders_id")
 	private OrdersEntity orders;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "account_id")
 	private AccountEntity account;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private ProductEntity product;
 

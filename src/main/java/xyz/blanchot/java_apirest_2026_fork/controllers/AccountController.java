@@ -17,24 +17,24 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/accounts")
 @RequiredArgsConstructor
 public class AccountController {
 
 	private final AccountMapper mapper;
 	private final AccountService service;
 
-	@PostMapping("/account")
+	@PostMapping
 	public AccountEntity save(@RequestBody @Valid CreateAccount account) {
 		return service.save(mapper.buildDaoFromDto(account));
 	}
 
-	@GetMapping("/account/{accountId}")
+	@GetMapping("/{accountId}")
 	public ResponseEntity<AccountEntity> findById(@PathVariable Long accountId) {
 		return ResponseEntity.ok(service.findById(accountId));
 	}
 
-	@GetMapping("/account")
+	@GetMapping
 	public List<AccountEntity> findAll() {
 		return service.findAll();
 	}

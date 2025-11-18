@@ -7,10 +7,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity(name = "orders")
 @NoArgsConstructor
@@ -23,8 +26,11 @@ public class OrdersEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long ordersId;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "account_id")
 	private AccountEntity account;
+
+	@OneToMany(mappedBy = "orders")
+	private List<OrdersDetailsEntity> ordersDetails;
 
 }

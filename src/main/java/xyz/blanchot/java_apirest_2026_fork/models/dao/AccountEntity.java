@@ -1,5 +1,6 @@
 package xyz.blanchot.java_apirest_2026_fork.models.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -39,6 +40,7 @@ public class AccountEntity {
 	private AddressEntity address;
 
 	@OneToMany(mappedBy = "account")
+	@JsonIgnore
 	private List<OrdersEntity> orders;
 
 }

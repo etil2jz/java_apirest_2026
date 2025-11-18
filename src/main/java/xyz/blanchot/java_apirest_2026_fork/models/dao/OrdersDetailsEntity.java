@@ -1,5 +1,6 @@
 package xyz.blanchot.java_apirest_2026_fork.models.dao;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -22,12 +23,13 @@ public class OrdersDetailsEntity {
 	private OrdersDetailsId ordersDetailsId;
 
 	@MapsId("ordersId")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "orders_id")
+	@JsonBackReference
 	private OrdersEntity orders;
 
 	@MapsId("productId")
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private ProductEntity product;
 

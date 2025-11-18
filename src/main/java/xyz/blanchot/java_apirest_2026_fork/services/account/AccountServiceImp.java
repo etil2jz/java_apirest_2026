@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import xyz.blanchot.java_apirest_2026_fork.services.account.port.AddressVerificationPort;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +21,7 @@ public class AccountServiceImp implements AccountService {
 
 	private final AccountJPARepository repository;
 
-	private final RestClient restClient;
+	private final AddressVerificationPort addressVerificationPort;
 
 	private final PasswordEncoder passwordEncoder;
 
@@ -31,23 +32,13 @@ public class AccountServiceImp implements AccountService {
 
 		String addressToVerify = account.getAddress().getAddress();
 
-		GeocodingResponse response = restClient.get().uri("/geocodage/search?q={address}", addressToVerify).retrieve().body(GeocodingResponse.class);
+		String validatedAddress = addressVerificationPort.verifyAndFormatAddress(addressToVerify)
+				.orElseThrow(() -> new NotFoundException("Address '" + addressToVerify + "' not found or incorrect"));
 
-		Optional<Properties> validAddressProperties = Optional.empty();
-		if (response != null) {
-			validAddressProperties = response.getFeatures().stream()
-					.map(Feature::getProperties)
-					.filter(properties -> properties.getScore() > 0.8)
-					.findFirst();
-		}
+		account.setPassword(passwordEncoder.encode(account.getPassword()));
+		account.getAddress().setAddress(validatedAddress);
 
-		if (validAddressProperties.isPresent()) {
-			account.setPassword(passwordEncoder.encode(account.getPassword()));
-			account.getAddress().setAddress(validAddressProperties.get().getLabel());
-			return repository.save(account);
-		} else {
-			throw new NotFoundException("Address '" + addressToVerify + "' not found or incorrect");
-		}
+		return repository.save(account);
 	}
 
 	public AccountEntity findById(Long id) {
