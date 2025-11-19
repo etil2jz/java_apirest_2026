@@ -2,6 +2,8 @@
 Ce projet a pour but de lancer un projet bootstrap en Java Spring Boot.
 L'objectif est de découvrir plein de technologies et permettre aux utilisateurs de laisser un avis sur un produit.
 
+Nous nous retrouvons avec une API REST qui permet la gestion d'utilisateurs, de produits, de commandes et d'avis clients.
+
 ## Pré-requis
 Pour lancer ce projet, Docker Compose est requis.
 
@@ -58,28 +60,76 @@ Déployez un conteneur MySQL en exécutant la commande suivante dans le réperto
 docker compose up -d
 ```
 ___
-## Contrat d'interface
-Afin de visualiser les routes existantes, un Swagger est à votre disposition.
+## Documentation de l'API (Swagger)
+Une fois l'application lancée, la documentation interactive est disponible ici : http://127.0.0.1:8080/swagger-ui/index.html
 
-Swagger est un outil qui génère automatiquement une documentation interactive et visuelle pour une API.
+Certains endpoints sont publics, d'autres nécessitent une authentification (Basic Auth) :
 
-http://127.0.0.1:8080/swagger-ui/index.html
+| **Méthode** 	 | **Endpoint** 	 | **Description**                      	 | **Accès**      	  |
+|---------------|----------------|----------------------------------------|-------------------|
+| `POST`      	 | /accounts    	 | Créer un compte (avec vérif adresse) 	 | 🌍 Public       	 |
+| `GET`       	 | /products    	 | Voir le catalogue produit            	 | 🌍 Public       	 |
+| `GET`       	 | /notices     	 | Voir les avis                        	 | 🌍 Public       	 |
+| `POST`      	 | /products    	 | Ajouter un produit                   	 | 🔒 Auth Requise 	 |
+| `POST`      	 | /orders      	 | Passer une commande                  	 | 🔒 Auth Requise 	 |
+| `GET`       	 | /orders      	 | Voir ses commandes                   	 | 🔒 Auth Requise 	 |
+| `POST`      	 | /notices     	 | Laisser un avis (achat requis)       	 | 🔒 Auth Requise 	 |
 
-### Explication de l'API
-Nous avons créé :
+## Exemples de JSON
+### Créer un compte (POST /accounts)
+L'adresse sera automatiquement corrigée par l'API Géoplateforme.
+```json
+{
+  "username": "jean_dupont",
+  "password": "password123",
+  "description": "Client fidèle",
+  "address": "3 rue des potiers toulouse"
+}
+```
 
-- Un controller Account
-- Un Service Account et son interface
-- Une interface Repository Account
-- Un DAO AccountEntity
+### Ajouter un produit (POST /products)
+```json
+{
+  "name": "Apple MacBook Air M5",
+  "price": 1099.99
+}
+```
 
-AccountEntity représente la structure de données dans la base de données.
+### Passer commande (POST /orders)
+```json
+{
+  "accountId": 1,
+  "productIds": [1]
+}
+```
 
-Pour pouvoir enregistrer une donnée, nous utilisons l'entrée AccountController.  
-Sur le verbe POST, nous allons enregistrer la donnée (attention si vous regardez le swagger, il faudra supprimer account_id (pour mettre cette valeur à 'nulle' via le JSON)).  
-Une fois le JSON envoyé via le controller, celui-ci contacte le service qui ne fait aucun traitement particulier, il enregistre directement dans la BDD via AccountRepository.
+### Laisser un avis (POST /notices)
+Fonctionne uniquement si l'utilisateur 1 a acheté le produit 1.
+```json
+{
+  "accountId": 1,
+  "productId": 1,
+  "userReview": "Ça fait du bien de coder sur un Mac !"
+}
+```
 
-Maintenant, il y a deux routes pour récupérer la donnée :
+## Explication technique de l'API
+### Le flux de données général
+Chaque requête suit ce cheminement :
+1. **Controller** : Reçoit le DTO (Data Transfer Object), valide les entrées (`@Valid`) et délègue au Service.
+2. **Mapper** : Convertit les DTOs en Entités (DAO) pour isoler.
+3. **Service** : Applique la logique métier (vérifications, appels externes) et appelle le Repository.
+4. **Repository** : Interface JPA qui communique avec la BDD MySQL.
 
-- La première : la méthode `findById`, celle-ci grâce au PathParam, nous allons passer l'id de l'account enregistré dans la BDD pour récupérer ces données.
-- La seconde : la méthode `findAll`, celle-ci permet de récupérer tous les accounts enregistrés dans la BDD.  
+### Les controllers
+1. **Account (Utilisateurs)** : Créer un compte, récupérer la liste de tous les comptes, récupérer un compte spécifique via l'ID.
+2. **Notice (Avis)** : Laisser un avis, récupérer la liste de tous les avis, récupérer un avis spécifique via l'ID.
+3. **Orders (Commandes)** : Passer une commande, récupérer la liste de toutes les commandes, récupérer une commande spécifique via l'ID.
+4. **Product (Produits)** : Ajouter un produit, récupérer la liste de tous les produits, récupérer un produit spécifique via l'ID.
+
+### Sécurité
+L'API est sécurisée par Spring Security :
+- **Authentification** : Basic Auth.
+- **Autorisations** :
+- * `PUBLIC` : Inscription (`POST /accounts`), Consultation du catalogue et des avis (`GET`).
+- * `PROTECTED` : Passer une commande, ajouter un produit, laisser un avis.
