@@ -1,6 +1,8 @@
+name: db_j2ee
+
 services:
   database:
-    image: mysql
+    image: mysql:latest
     container_name: database
     environment:
       MYSQL_ROOT_PASSWORD: '1234Azerty'
