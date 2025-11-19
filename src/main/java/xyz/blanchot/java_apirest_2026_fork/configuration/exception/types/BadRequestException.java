@@ -3,20 +3,15 @@ package xyz.blanchot.java_apirest_2026_fork.configuration.exception.types;
 import org.springframework.http.HttpStatus;
 import xyz.blanchot.java_apirest_2026_fork.configuration.exception.ApiException;
 
+public class BadRequestException extends ApiException {
 
-public class NotFoundException extends ApiException {
-
-	public NotFoundException() {
-		this("Not found");
-	}
-
-	public NotFoundException(String message) {
+	public BadRequestException(String message) {
 		super(message);
 	}
 
 	@Override
 	public HttpStatus getHttpStatus() {
-		return HttpStatus.NOT_FOUND;
+		return HttpStatus.BAD_REQUEST;
 	}
 
 }

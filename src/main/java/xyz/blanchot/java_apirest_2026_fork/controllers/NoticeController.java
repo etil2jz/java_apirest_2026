@@ -9,31 +9,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import xyz.blanchot.java_apirest_2026_fork.models.dao.OrdersEntity;
-import xyz.blanchot.java_apirest_2026_fork.models.dto.CreateOrder;
-import xyz.blanchot.java_apirest_2026_fork.services.orders.OrdersServiceImp;
+import xyz.blanchot.java_apirest_2026_fork.models.dao.NoticeEntity;
+import xyz.blanchot.java_apirest_2026_fork.models.dto.CreateNotice;
+import xyz.blanchot.java_apirest_2026_fork.services.notice.NoticeService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/notices")
 @RequiredArgsConstructor
-public class OrdersController {
+public class NoticeController {
 
-	private final OrdersServiceImp service;
+	private final NoticeService service;
 
 	@PostMapping
-	public OrdersEntity create(@RequestBody @Valid CreateOrder dto) {
-		return service.createOrder(dto.getAccountId(), dto.getProductIds());
+	public NoticeEntity create(@RequestBody @Valid CreateNotice dto) {
+		return service.create(dto.getAccountId(), dto.getProductId(), dto.getUserReview());
 	}
 
-	@GetMapping("/{orderId}")
-	public ResponseEntity<OrdersEntity> findById(@PathVariable Long orderId) {
-		return ResponseEntity.ok(service.findById(orderId));
+	@GetMapping("/{noticeId}")
+	public ResponseEntity<NoticeEntity> findById(@PathVariable Long noticeId) {
+		return ResponseEntity.ok(service.findById(noticeId));
 	}
 
 	@GetMapping
-	public List<OrdersEntity> findAll() {
+	public List<NoticeEntity> findAll() {
 		return service.findAll();
 	}
 

@@ -3,6 +3,7 @@ package xyz.blanchot.java_apirest_2026_fork.services.orders;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import xyz.blanchot.java_apirest_2026_fork.configuration.exception.types.NotFoundException;
 import xyz.blanchot.java_apirest_2026_fork.models.dao.AccountEntity;
 import xyz.blanchot.java_apirest_2026_fork.models.dao.OrdersDetailsEntity;
 import xyz.blanchot.java_apirest_2026_fork.models.dao.OrdersDetailsId;
@@ -60,6 +61,21 @@ public class OrdersServiceImp {
 		order.setOrdersDetails(detailsList);
 
 		return order;
+	}
+
+	// Retourner toutes les commandes
+	public List<OrdersEntity> findAll() {
+		List<OrdersEntity> orders = ordersRepository.findAll();
+		if (orders.isEmpty()) {
+			throw new NotFoundException("No orders found");
+		}
+		return orders;
+	}
+
+	// Retourner la commande correspondante
+	public OrdersEntity findById(Long id) {
+		return ordersRepository.findById(id)
+				.orElseThrow(() -> new NotFoundException("Order id " + id + " not found"));
 	}
 
 }

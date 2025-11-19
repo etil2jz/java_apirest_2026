@@ -2,7 +2,9 @@ package xyz.blanchot.java_apirest_2026_fork.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,11 @@ public class ProductController {
 	@PostMapping
 	public ProductEntity create(@RequestBody @Valid CreateProduct dto) {
 		return service.save(mapper.toEntity(dto));
+	}
+
+	@GetMapping("/{productId}")
+	public ResponseEntity<ProductEntity> findById(@PathVariable Long productId) {
+		return ResponseEntity.ok(service.findById(productId));
 	}
 
 	@GetMapping

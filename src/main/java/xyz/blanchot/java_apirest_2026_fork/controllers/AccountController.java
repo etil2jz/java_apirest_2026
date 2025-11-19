@@ -1,9 +1,5 @@
 package xyz.blanchot.java_apirest_2026_fork.controllers;
 
-import xyz.blanchot.java_apirest_2026_fork.models.dao.AccountEntity;
-import xyz.blanchot.java_apirest_2026_fork.models.dto.CreateAccount;
-import xyz.blanchot.java_apirest_2026_fork.models.mappers.AccountMapper;
-import xyz.blanchot.java_apirest_2026_fork.services.account.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.blanchot.java_apirest_2026_fork.models.dao.AccountEntity;
+import xyz.blanchot.java_apirest_2026_fork.models.dto.CreateAccount;
+import xyz.blanchot.java_apirest_2026_fork.models.mappers.AccountMapper;
+import xyz.blanchot.java_apirest_2026_fork.services.account.AccountService;
 
 import java.util.List;
 

@@ -1,15 +1,11 @@
 package xyz.blanchot.java_apirest_2026_fork.services.account;
 
-import xyz.blanchot.java_apirest_2026_fork.configuration.exception.types.NotFoundException;
-import xyz.blanchot.java_apirest_2026_fork.models.dao.AccountEntity;
-import xyz.blanchot.java_apirest_2026_fork.models.dto.Feature;
-import xyz.blanchot.java_apirest_2026_fork.models.dto.GeocodingResponse;
-import xyz.blanchot.java_apirest_2026_fork.models.dto.Properties;
-import xyz.blanchot.java_apirest_2026_fork.repositories.AccountJPARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
+import xyz.blanchot.java_apirest_2026_fork.configuration.exception.types.NotFoundException;
+import xyz.blanchot.java_apirest_2026_fork.models.dao.AccountEntity;
+import xyz.blanchot.java_apirest_2026_fork.repositories.AccountJPARepository;
 import xyz.blanchot.java_apirest_2026_fork.services.account.port.AddressVerificationPort;
 
 import java.util.List;
